@@ -12,7 +12,6 @@ task :post, :title do |post, args|
 layout: post
 title:  #{title}
 date:   #{date}
----
-    }
+---}
   end
 end
