@@ -2,4 +2,3 @@ name: Denver.rb Beginner's Track
 markdown: redcarpet
 pygments: true
 exclude: ['Rakefile', 'README.md']
-baseurl: /beginners-track
