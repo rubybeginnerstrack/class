@@ -9,4 +9,4 @@ $ rake post["Title of the Post"]
 This creates a new markdown formatted post under `beginners-track/_posts` with the correct Yaml header.
 
 ## To deploy
-Save changes to gh-pages branch and push to github. 
+Save changes to post and push to master on github.
