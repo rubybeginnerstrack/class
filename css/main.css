@@ -34,13 +34,18 @@ a:visited { color: #a0a; }
 /* Home
 /*
 /*****************************************************************************/
+.intro {
+  border: 1px solid #ddd;
+  background-color: #eee;
+  padding: 0 .2em;
+}
+
 .widget {
   display:inline-block;
   font-size: 80%;
   color: #666;
   margin-top: 2em;
   margin-right: 6em;
-  margin-bottom: 2em;
   overflow: hidden
 }
 
