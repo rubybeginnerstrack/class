@@ -1,4 +1,4 @@
-name: Ruby Beginner's Track
+name: Ruby Beginners Track
 markdown: redcarpet
 pygments: true
 exclude: ['Rakefile', 'README.md']
