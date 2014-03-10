@@ -1,4 +1,4 @@
-name: Denver.rb Beginner's Track
+name: Ruby Beginner's Track
 markdown: redcarpet
 pygments: true
 exclude: ['Rakefile', 'README.md']
