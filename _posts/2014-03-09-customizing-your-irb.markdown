@@ -112,7 +112,14 @@ alias q exit # use 'q' to quit
 wirble # kick off the wirble method above
 ```
 
+If you want to dig more into what you can do to tweak your irb, check out these:
+
+[ThoughtBot: irb & script/console tips][tbot]
+
+[Stack Overflow: what's your favourite irb trick][stack]
+
 Here's the thing... if you really find yourself getting too crazy about what you can do in your .irbrc file, you should probably start looking into [Pry][pry]. It is a replacement for irb that is crazy powerful and adds all sorts of features. But, learning it can get in the way of learning Ruby, so only go down that route for now if you find yourself spending as much time tweaking irb as you do actually coding.
+
 
 I'll start getting these lesson notes up WAY sooner now that [Mr. JonathanTR][jonriles] has set this lovely blog up.
 
@@ -121,3 +128,5 @@ I'll start getting these lesson notes up WAY sooner now that [Mr. JonathanTR][jo
 [sublime]: https://www.sublimetext.com/docs/2/osx_command_line.html
 [pry]: http://pryrepl.org/
 [jonriles]: http://twitter.com/jonriles
+[tbot]: http://robots.thoughtbot.com/irb-script-console-tips
+[stack]: http://stackoverflow.com/questions/123494/whats-your-favourite-irb-trick
