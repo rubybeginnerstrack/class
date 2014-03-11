@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Customizing your irb
+title:  February - Customizing your irb
 date:   2014-03-09
 ---
 by [Jeffrey Matthias][jeffrey matthias]
