@@ -10,6 +10,7 @@ First off, here is the [Github Ruby style guide][github style]. There is no sing
 
 Now, to the methods. First, I want to thanks JonathanTR for puting the code example together for this lesson. This wouldn't have happened without him.
 
+
 Methods are reusable chunks of code. We give them a name and "call" the method to execute the code. (Technically, in Ruby, we **send** the message, but that is a distinction we will get into at another juncture.) Every method starts out being defined like this:
 
 ```ruby
@@ -199,5 +200,5 @@ So, let's review our rules about methods.
 Cool. Now I just need to figure out how to cover all of the above in our 20 minute session.
 
 
-
+[jeffrey matthias]: http://twitter.com/idlehands
 [github style]: https://github.com/styleguide/ruby
