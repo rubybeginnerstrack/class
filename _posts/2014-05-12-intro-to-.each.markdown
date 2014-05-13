@@ -1,0 +1,279 @@
+---
+layout: post
+title:  Intro to .each
+date:   2014-05-12
+---
+by [Jeffrey Matthias][jeffrey matthias]
+
+Ruby allows you to iterate over an array in a way similar to most other languages. It looks something like this:
+
+```ruby
+my_favorite_numbers = [1, 7, 13, 37, 23, 12]
+limit = my_favorite_numbers.length - 1;
+for index in 0..limit
+  puts "I really like #{my_favorite_numbers[index]}."
+end
+```
+And the output should look like this:
+
+```ruby
+I really like 1.
+I really like 7.
+I really like 13.
+I really like 37.
+I really like 23.
+I really like 12.
+=> [1, 7, 13, 37, 23, 12]
+```
+
+But that isn't the common way to iterate over things in Ruby. In fact, people will probably give you a funny look. Ruby has a mixin (module) called Enumerable that embues anything that includes it with special powers: the powers of iteration.
+
+Everything we discuss here will be focused on the Array class and some of the most common ways in which it uses Enumerable, but make a mental note that, as you learn Ruby better, you can include Enumerable in classes that you write and take advantage of the same sort of mechanics.
+
+First, let's prove to ourselves that Array actually does include the Enumerable module.
+
+```ruby
+>> Array.included_modules
+=> [Enumerable, PP::ObjectMixin, Kernel]
+```
+
+Well, there it is. Good enough for me. Let's shelve those other two for another day. They are a good bit more complicated than our current focus, Enumerable.
+
+So, now that we know that array has the power of Enumerable, let's re-write the same iteration from the ```for``` loop, but do it with our new favorite method, ```#each```.
+
+```ruby
+my_favorite_numbers = [1, 7, 13, 37, 23, 12]
+my_favorite_numbers.each do |current_number|
+  puts "I really like #{current_number}."
+end
+```
+And the output:
+
+```ruby
+I really like 1.
+I really like 7.
+I really like 13.
+I really like 37.
+I really like 23.
+I really like 12.
+=> [1, 7, 13, 37, 23, 12]
+```
+
+Looks like it worked.  But... was there any point to the change? Well, for one thing, once you get used to the syntax, it is fairly easy to read. Second, by using ```.each```, we removed all logic that involved having to track the index of the element we were on (Don't worry, if you really want that info, there is a way to get it). Third, while ```.each``` is only a slightly more concise, it forms the basis for a whole ton of variants that make it so that you don't have to roll your own logic for the most common operations. Let's check out the names of those variations of which I speak:
+
+```ruby
+>> Enumerable.methods
+=> [:to_a, :entries, :sort, :sort_by, :grep, :count, :find, :detect, :find_index,
+    :find_all, :select, :reject, :collect, :map, :flat_map, :collect_concat, :inject, 
+    :reduce, :partition, :group_by, :first, :all?, :any?, :one?, :none?, :min, :max, 
+    :minmax, :min_by, :max_by, :minmax_by, :member?, :include?, :each_with_index, 
+    :reverse_each, :each_entry, :each_slice, :each_cons, :each_with_object, :zip, 
+    :take, :take_while, :drop, :drop_while, :cycle, :chunk, :slice_before]
+```
+
+Honestly, it's more than I even know what to do with. And you just get access to them including the Enumerable module in a class. So, let's look at the syntax of that ```.each``` statement and then we'll explore some of the more common Enumerable methods that it helps to build.
+
+As a reminder, this was our refactored code:
+
+```ruby
+my_favorite_numbers = [1, 7, 13, 37, 23, 12]
+my_favorite_numbers.each do |current_number|
+  puts "I really like #{current_number}."
+end
+```
+
+```my_favorite_numbers = [1, 7, 13, 37, 23, 12]``` is us assigning an array to our variable. If we wanted to skip using the variable and just write ```[1, 7, 13, 37, 23, 12].each do |current_number|``` for the first line, it would have worked just fine, but by assigning them to a variable, someone else reading the code now knows that this is a collection of my favorite numbers. I don't think that is inherently obvious from ```[1, 7, 13, 37, 23, 12]``` alone.
+
+Now look at the next line. ```my_favorite_numbers.each do |current_number|``` has 4 things worth noting. The first is the variable, but we've already talked about that. The next thing is that we are sending it the message ```.each```. **Note: most people would say 'calling' it, but, technically, in Ruby, we send method names as messages to objects.** Since we are sending ```.each```, we're making the assumption that whatever the variable is holding can receive that message. We're set here, since it is an array.
+
+The next bit is ```do```. This is a ruby key word that indicates the beginning of a 'block' of code. A block of code is simply a section of code that is grouped together. In Ruby, we see lines of code grouped together in a block by being sandwiched between ```do``` and ```end``` or between ```{``` and ```}```. But note that ```{}``` can also be the syntax defining a hash. Fortunately, the syntax for a hash is obvious enough (```{key: "value"}``` or ```{:key => "value"}```) that you probably won't mistake a block for a hash or vice versa.
+
+Ok, so, we know that the ```do``` in our code is beginning a block, but then what is that thing between the ```| |```s (we call them pipes)? Well, it's a temporary variable that is only available within the scope of the block we are defining. The value assigned to that variable on each iteration is the element of the array that we are currently on. So, on the first pass through our block of code, the value of ```current_number``` is 1. On the second pass, it's 7 and so forth.
+
+The code is executed on each pass. Since our block has a ```puts``` statement in it, we see the side effect repeated in the output. It's worth noting that the return value of the ```#each``` method is the array itself, the ```=> [1, 7, 13, 37, 23, 12]```. So, if we assigned the value to a variable like this:
+
+```ruby
+my_favorite_numbers = [1, 7, 13, 37, 23, 12]
+the_return_value = my_favorite_numbers.each do |current_number|
+  puts "I really like #{current_number}."
+end
+```
+
+Our new variable ```the_return_value``` would have a value of ```[1, 7, 13, 37, 23, 12]```. For vanilla ```.each```, this isn't really a big deal, but some of the variants return different things, so it is worth noting.
+
+Speaking of those variants, let's now look at a few of them. I'll write a ```.each``` version and then show the Enumerable method that let's us cut down our verbosity and if the syntax is a little different, I'll go over that.
+
+
+# #map
+------
+
+Let's say we have an array of numbers and want to change all the data based on a specific block of code. That's weird sounding, so let's run with an example. I have an array of words and I want to get them all as lower case words. I can do this with ```.each``` like this:
+
+```ruby
+lower_case_words = [] # setting up an array to hang on to the new words
+["Pickle", "String Cheese", "Ice Queen"].each do |original_word|
+  lower_case_words << original_word.downcase
+end
+```
+
+```lower_case_words``` now has the value ```["pickle", "string cheese", "ice queen"]```. Cool. Now let's look at it with ```#map```:
+
+```ruby
+lower_case_words = ["Pickle", "String Cheese", "Ice Queen"].map do |original_word|
+  original_word.downcase
+end
+```
+
+Well. I guess that's a little better. Note that ```#map``` returns an array of the values returned from each pass of the block. This doesn't seem **that** much clearer because we are only executing one line of code in the block. But since there is only one line, why don't we switch over to the other syntax for a block:
+
+```ruby
+lower_case_words = ["Pickle", "String Cheese", "Ice Queen"].map {|original_word| original_word.downcase }
+```
+
+Once you get used to working in Ruby, your eyes will be able to pretty easily parse the line above to see what is going on. There is one slight variation to ```.map``` that is worth noting. What if you have the array stored in a variable that you would like to then hold the modified values? For example, if we had ```words = ["Pickle", "String Cheese", "Ice Queen"]``` and wanted the variable ```words``` then contain the lower case words. That's where ```!``` (pronounced 'bang') comes into play. It will modify the data in the variable instead of returning a new value. So:
+
+```ruby
+words = ["Pickle", "String Cheese", "Ice Queen"]
+words.map! {|original_word| original_word.downcase }
+```
+Now, ```words``` will return ```["pickle", "string cheese", "ice queen"]```, the lower case values. ***Note: be wary of using methods with ```!```. They replace your original data, meaning that you will never have access to it in its original form again.***
+
+
+# #each with index
+----------------
+
+Remember me promising that you could access the index if you **really** wanted to? Well, this is the way. It's syntax is almost the same as ```#each```, but you supply two local variables:
+
+```ruby
+["Pickle", "String Cheese", "Ice Queen"].each_with_index do |word, index|
+  print_this_many = index + 1
+  print_this_many.times do
+    puts word
+  end
+end
+```
+
+The above code will yield:
+
+```ruby
+Pickle
+String Cheese
+String Cheese
+Ice Queen
+Ice Queen
+Ice Queen
+```
+
+Notice that we stuck another loop (```print_this_many.times do```) inside of our loop? You can do it, but don't get too crazy... readability is important when you're writing code that others (or future you) will need to read and understand.
+
+
+# #select
+---------
+
+This is a handy one. You want to only keep specific results based on conditions that you can express in code? Try select.
+
+Let's try this as an each statment first.
+
+```ruby
+cities = ["Strongsville, OH", "Cleveland, OH", "Memphis, TN", "Denver, CO"]
+cities_in_ohio = []
+cities.each do |city|
+  cities_in_ohio << city if city.split(", ").last == "OH"
+end
+```
+
+The above code will leave us with ```cities_in_ohio``` holding the value ```["Strongsville, OH", "Cleveland, OH"]```. 
+
+Let's make sure all of that Ruby makes sense. This line ```cities_in_ohio << city if city.split(", ").last == "OH"``` 
+does a few things. It is a one-line conditional statement. It will only execute the code before the ```if``` when the code after the ```if``` evaluates to true. ```.split``` called on a string will split up the string into an array of strings. It uses the paramater passed to it, in this case ```", "```, as the divider between the strings. It does not include the parameter in the array. So, ```"Strongsville, OH".split(", ")``` would return ```["Strongsville", "OH"]```. After that we are just checking if the last string matches "OH".
+
+We can reduce the visual clutter of the above code with ```#select```:
+
+```ruby
+cities = ["Strongsville, OH", "Cleveland, OH", "Memphis, TN", "Denver, CO"]
+cities_in_ohio = cities.select {|city| city.split(", ").last == "OH" }
+```
+
+That leaves us with the same result. And, like with ```#map```, ```#select!``` will modify the existing variable.
+
+```ruby
+cities = ["Strongsville, OH", "Cleveland, OH", "Memphis, TN", "Denver, CO"]
+cities.select!{|city| city.split(", ").last == "OH" }
+```
+
+```cities``` will then hold your value. Again, remember that you just lost your other data if you use the ```!```.
+
+# #detect
+---------
+
+Find the first result in an array that matches your condition. With ```.each```:
+
+```ruby
+first_city_in_ohio = ''
+cities = ["Strongsville, OH", "Cleveland, OH", "Memphis, TN", "Denver, CO"]
+cities.each do |city|
+  if city.split(", ").last == "OH"
+    first_city_in_ohio = city
+    break
+  end
+end
+```
+
+Notice that we have to set up a variable outside of the block of code, when we assign a empty string to ```first_city_in_ohio```. If we didn't do this, the variable would only be available in the scope of the block, meaning that after the ```.each``` statement was done, Ruby would have forgotten what was stored in ```first_city_in_ohio```. ```break`` is the way to stop a ```.each``` loop right where you are and skip the rest of whatever you were iterating over. As a general rule, it never hursts to avoid using ```break```. Fortunately, we have ```#detect``` to help us here.
+
+```ruby
+cities = ["Strongsville, OH", "Cleveland, OH", "Memphis, TN", "Denver, CO"]
+first_city_in_ohio = cities.detect {|city| city.split(", ").last == "OH" }
+```
+
+# #inject
+---------
+
+This is the most complicated and one of the harder ones to catch on to. If you want to create an entirely new object as the result of the iteration through an array, ```#select``` is your friend. But, let's look at the same idea with ```.each``` first. Here is a basic example of wanting to sum up the numbers in an array:
+
+```ruby
+sum = 0
+[1, 2, 3, 4, 5, 6].each do |number|
+  sum = sum + number
+end
+```
+
+Sure enough, our sum will equal 21. Since we're taking an array and returning a different data type, this is a candidate for ```inject```. It looks like this:
+
+```ruby
+sum = [1, 2, 3, 4, 5, 6].inject(0) {|sum, number| sum + number }
+```
+
+So... huh? Well, for the most part, it seems like familiar syntax, but there is obviously something else going on here. Notice that ```#inject``` takes a parameter. In this case, it's 0. We're giving it something to start with. It is the beginning of our newly constructed object and it has be of the data type that we plan to return. As each pass goes through, the result of the code block is what gets stored in the variable called sum. So, on the first pass, sum is 0 and number is 1, but ```sum + number``` is 1, so that's what gets stored in ```sum``` for the next pass. Since that pass returns 3, that is what will be stored in ```sum``` for the consquent pass. At the end, the method returns whatever the final value is from the last past, in this case, it is the result of 15 (stored in sum) and 6 (stored in number) or 21.
+
+Believe it or not, this really is a basic example. Let's say that you want to take an array and return a hash. Let's do a count of how many cities are in each state, starting with an ```#each``` statement:
+
+```ruby
+cities = ["Strongsville, OH", "Cleveland, OH", "Memphis, TN", "Denver, CO"]
+city_counts = Hash.new(0)
+cities.each do |city_with_state|
+  city, state = city_with_state.split(", ")
+  city_counts[state] += 1
+end
+```
+
+Ok... I pulled a little magic here, so let's make sure we understand what I did. When I set ```city_counts = Hash.new(0)```, I'm creating a hash that defaults the value of a key that it doesn't have to 0, instead of ```nil```, the normal default. That allows me to increment the state by 1 when I see a new one, since you can add 1 to zero. ```city_counts``` will send up having this value: ```{"OH"=>2, "TN"=>1, "CO"=>1}``` Try playing around with that in irb if it doesn't quite make sense.
+
+So, I could rewrite the above code using ```#inject``` like this:
+```ruby
+city_counts = ["Strongsville, OH", "Cleveland, OH", "Memphis, TN", "Denver, CO"].inject(Hash.new(0)) do |counts, city_with_state|
+  city, state = city_with_state.split(", ")
+  counts[state] += 1
+  counts
+end
+```
+
+If you would like to learn more about ```#inject```, I would recomment [this article][fields].
+
+
+## Conclusion
+----------------
+This is a lot of information to take in. Ultimately, you need to write code that you can understand and that is clear to others when they come across it. While the variations of #each all seem sexy, remember that they are all effectively just that, variations of each. If you can't use them to make your code clear or easier to read (my last inject example might be guilty of this) then consider skipping it.
+
+[jeffrey matthias]: http://twitter.com/idlehands
+[fields]: http://blog.jayfields.com/2008/03/ruby-inject.html
