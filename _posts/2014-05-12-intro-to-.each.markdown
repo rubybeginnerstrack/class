@@ -187,6 +187,8 @@ The above code will leave us with ```cities_in_ohio``` holding the value ```["St
 Let's make sure all of that Ruby makes sense. This line ```cities_in_ohio << city if city.split(", ").last == "OH"``` 
 does a few things. It is a one-line conditional statement. It will only execute the code before the ```if``` when the code after the ```if``` evaluates to true. ```.split``` called on a string will split up the string into an array of strings. It uses the paramater passed to it, in this case ```", "```, as the divider between the strings. It does not include the parameter in the array. So, ```"Strongsville, OH".split(", ")``` would return ```["Strongsville", "OH"]```. After that we are just checking if the last string matches "OH".
 
+***Select will hang onto the elements in your original array if the last line of the block of code evaluates to true.***
+
 We can reduce the visual clutter of the above code with ```#select```:
 
 ```ruby
