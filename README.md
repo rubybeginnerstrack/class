@@ -5,7 +5,7 @@ This is a small blog for notes and links from Beginner's Track talks.
 ### Fork the repo - hit the fork button in the upper right
 
 ### Clone it to your system
-don't forget to run ```bundle install```
+run ```$ gem install jekyll``` from the command line. Jekyll lets you see your post.
 
 From the command line, run
 ```shell
