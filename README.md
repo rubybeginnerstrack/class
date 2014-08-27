@@ -17,7 +17,7 @@ The formatting style is github markdown. Here is a cheat sheet on how to use it.
 
 Make sure to give yourself credit on the post and to include whatever links you want for people to get in touch.
 
-If you run ```$ jekyll build --watch``` you will be able to see your post at 'localhost:4000'. The ```--watch``` will have jekyll keep an eye on changes update the server.
+If you run ```$ jekyll serve --watch``` you will be able to see your post at 'localhost:4000'. The ```--watch``` will have jekyll keep an eye on changes update the server.
 
 Write your post!  
 
