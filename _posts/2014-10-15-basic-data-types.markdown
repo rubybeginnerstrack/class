@@ -125,7 +125,7 @@ There is only one problem:
 “Racecar” == “racecaR” #=> false
 ```
 
-The last problem is the casing doesn’t seem to match. To remedy this, we’ll use another String method: ```:downcase.`` 
+The last problem is the casing doesn’t seem to match. To remedy this, we’ll use another String method: ```:downcase.``` 
 ```
 “Racecar”.downcase.reverse == “Racecar”.downcase  #=> true
 ```
@@ -165,12 +165,12 @@ end
 ```
 
 Now we can do something like this: 
-```
-“racecar”.palindrome?                  #=> true 
-“A Toyota”.palindrome?                 #=> true 
-“No lemons, no melon.”.palindrome?     #=> true
-“He won a Toyota now, eh?”.palindrome? #=> true 
-```
+
+	“racecar”.palindrome?                  #=> true
+	“A Toyota”.palindrome?                 #=> true
+	“No lemons, no melon.”.palindrome?     #=> true
+	“He won a Toyota now, eh?”.palindrome? #=> true
+
 
 Pretty neat, right? 
 
