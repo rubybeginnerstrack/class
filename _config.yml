@@ -1,4 +1,6 @@
 name: Ruby Beginners Track
 markdown: redcarpet
+redcarpet:
+ extensions: ['tables']
 highlighter: 'pygments'
 exclude: ['Rakefile', 'README.md']
