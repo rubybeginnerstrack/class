@@ -1,0 +1,20 @@
+---
+layout: post
+title:  Fun with APIs and Ruby
+date:   2014-11-07
+---
+
+Hooray for APIs - Github - Madlibs - and Ruby!
+
+In the attached screencast I go over a 20 minute tutorial on
+pulling down commit messages from the Github API and using them to
+create madlibs (for fun and also profit).
+
+You can find me: [@ccanduc](//twitter.com/ccanduc) on twitter,
+[rrgayhart](http://github.com/rrgayhart) on github and cranking out
+code at [Quick Left](http://quickleft.com/).
+
+Cheers!
+
+<iframe width="640" height="480" src="//www.youtube.com/embed/EVjZPt1gD5w?list=UUpyCWatg-pDSnY2C3B_mdHQ&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+
