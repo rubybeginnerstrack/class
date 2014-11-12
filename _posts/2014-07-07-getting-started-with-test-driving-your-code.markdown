@@ -124,7 +124,7 @@ This allows our tests to make sure that our class behaves the way it needs to wi
 
 ----------------------------------------------
 
-**Concept 2 - stage your data, kick off your code, and then assert!**
+**Concept 3 - stage your data, kick off your code, and then assert!**
 
 Test can be broken down into three parts. I'm going to use a test from one of the JumpstartLab exercises to illustrate.
 
